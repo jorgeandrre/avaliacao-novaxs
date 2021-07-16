@@ -46,7 +46,22 @@ public class DemoController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    
+    @DeleteMapping("/{num}")
+    public ResponseEntity<String> deleteNum(@PathVariable("num") Long num) {
+        Optional<Demo> demo = _demoRepository.findById(num);
+        if(demo.isPresent()){
+            _demoRepository.delete(demo.get());
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping
+    public List<Demo> findAll() {
+        return _demoRepository.findAll();
+    }
+
 
     
 
