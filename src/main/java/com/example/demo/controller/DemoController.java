@@ -25,5 +25,29 @@ public class DemoController {
         return ResponseEntity.ok("Item salvo");
     }
 
+    @GetMapping("/{num}")
+    public ResponseEntity<Demo> getNum(@PathVariable("num") Long num) {
+        Optional<Demo> demo = _demoRepository.findById(num);
+        if(demo.isPresent())
+            return new ResponseEntity<Demo>(demo.get(), HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/{num}")
+    public ResponseEntity<Demo> putNum(@PathVariable("num") Long num) {
+        Optional<Demo> oldDemo = _demoRepository.findById(num);
+        if(oldDemo.isPresent()){
+            Demo demo = oldDemo.get();
+            _demoRepository.save(demo);
+            return new ResponseEntity<Demo>(demo, HttpStatus.OK);
+        }
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    
+
+    
 
 }
