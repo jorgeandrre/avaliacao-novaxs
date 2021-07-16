@@ -74,6 +74,15 @@ public class DemoController {
         }
     }
 
+    @GetMapping("/{tipo_do_pokemon}")
+    public List<Demo> getTipo(@PathVariable("tipo_do_pokemon") String tipo) {
+        List<Demo> demo = _demoRepository.findPokemonsTipo(tipo);
+        if(demo.size() > 0)
+            return demo;
+        else
+            return new ArrayList<Demo>();
+    }
+
 
     
 
