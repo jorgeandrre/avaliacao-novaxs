@@ -62,6 +62,18 @@ public class DemoController {
         return _demoRepository.findAll();
     }
 
+    @GetMapping("/{pagina}/{quantidade}")
+    public List<Demo> getPaginate(@PathVariable("pagina") Integer pagina,
+                                  @PathVariable("quantidade") Integer quantidade) {
+        Pageable paging = PageRequest.of(pagina, quantidade);
+        Page<Demo> pagedResult = _demoRepository.findAll(paging);
+        if (pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        } else {
+            return new ArrayList<Demo>();
+        }
+    }
+
 
     
 
